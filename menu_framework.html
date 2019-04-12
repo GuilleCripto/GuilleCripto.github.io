@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <title>Framework7</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/css/framework7.ios.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/css/framework7.ios.colors.min.css">
+
+   </head>
+   <body>
+      <div class="views">
+         <div class="view view-main">
+            <div class="navbar">
+               <div class="navbar-inner">
+                  <div class="center sliding">Pagina de Inicio</div>
+               </div>
+            </div>
+            <div class="pages navbar-through toolbar-through">
+               <div data-page="index" class="page">
+                  <div class="page-content">
+                     <div class="list-block">
+                        <ul>
+                           <li>
+                              //plain data objects allow to pass custom context to loaded page using 'data-context-name' attribute
+                              <a href="#" data-template="about" data-context-name="about" class="item-link item-content">
+                                 <div class="item-inner">
+                                    //provides link as 'About'
+                                    <div class="item-title">About</div>
+                                 </div>
+                              </a>
+                           </li>
+                           <li>
+                              //a context name for this link we pass context path from template7Data root
+                              <a href="likes.html" class="item-link item-content">
+                                 <div class="item-inner">
+                                    //provides link as 'Likes'
+                                    <div class="item-title">Me gusta Inicio...</div>
+                                 </div>
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script type="text/template7" id="about">
+         <div class="navbar">
+           <div class="navbar-inner">
+             <div class="left sliding"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+             <div class="center sliding">About Me</div>
+             <div class="right"><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a></div>
+           </div>
+         </div>
+         <div class="pages">
+           <div data-page="about" class="page">
+             <div class="page-content">
+               <div class="content-block">
+                 <div class="content-block-inner">
+                   //displays the details of the user by using the 'my-app.js' file
+                   <p>Hello, i am <b>{{firstname}} {{lastname}}</b>, <b>{{age}}</b> years old and working as <b>{{position}}</b> at <b>{{company}}</b>.</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+      </script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/js/framework7.min.js"></script>
+	
+
+   </body>
+</html>
+<script>
+
+// Initialize your app
+var myApp = new Framework7({
+   
+    animateNavBackIcon: true,
+    // Enable templates auto precompilation
+    precompileTemplates: true,
+    // Enabled rendering pages using Template7
+    template7Pages: true,
+    // Specify Template7 data for pages
+    template7Data: {
+        //provides the url for different page with data-page="likes"
+        'url:likes.html': {
+            likes: [
+                {
+                    title: 'Nelson Mandela',
+                    description: 'Champion of Freedom'
+                },
+                {
+                    title: 'Srinivasa Ramanujan',
+                    description: 'The Man Who Knew Infinity'
+                },
+                {
+                    title: 'James Cameron',
+                    description: 'Famous Filmmaker'
+                }
+            ]
+        },
+        about: {
+            firstname: 'William ',
+            lastname: 'Root',
+            age: 27,
+            position: 'Developer',
+            company: 'TechShell',
+        }
+    }
+});
+
+// Add main View
+var mainView = myApp.addView('.view-main', {
+    // Enable dynamic Navbar
+    dynamicNavbar: true
+});
+
+</script>
+
+	 <script>
+     
+		</script>
+		  <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .left {
+        border: 1px solid gray;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
