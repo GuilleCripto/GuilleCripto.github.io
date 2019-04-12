@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+      https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+      * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+      * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+      * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+  <!-- Removing 'unsafe-eval'. If needed, I will figure out a way around it -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: http://192.168.8.100:8082/VentasOnline/json/data/admin/all/products https://maps.googleapis.com https://fonts.googleapis.com 'unsafe-eval' 'unsafe-inline' ws://*; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:">
+  <!--
+  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:">
+
+
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <link rel="stylesheet" href="lib/font-awesome-4.5.0/css/font-awesome.min.css" />
+
+  <title>Sistemas Moviles</title>
+</head>
+
+ <style>
+
+   #map_holder {
+
+   height: 500px;
+   background-color: #00caf2;
+   }
+
+   </style>
+   	   <script type="text/javascript" async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3T-qPHkznTnM2rZtoZeHJlxcVRprJusc">
+
+  </script>
+
+
+	<style> 
+  	  #map {
+        height: 100%;
+      }
+     
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	</style> 
+
+<body class="theme-green" onload="showTable()">
+
+  <!-- Status bar overlay for full screen mode (PhoneGap) -->
+  <div class="statusbar-overlay"></div>
+
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!-- Left panel with cover effect-->
+  <div class="panel panel-left panel-cover">
+    <!--<div class="content-block">-->
+    <div class="content-block-title">Menu</div>
+    <div class="list-block">
+      <ul>
+        <li>
+          <a href="#" class="search-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Buscar</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="favorites-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Favoritos </div>
+            </div>
+          </a>
+        </li>
+		 <li>
+          <a href="Mapa.html" class="mapa-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Mapa</div>
+            </div>
+          </a>
+        </li>
+		 <li>
+          <a href="#" class="login-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Login</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Views -->
+  <div class="views" >
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main">
+      <!-- Top Navbar-->
+      <div class="navbar">
+        <div class="navbar-inner" data-page="index">
+          <div class="left">
+            <!--
+              Left link contains only icon - additional "icon-only" class
+              Additional "open-panel" class tells app to open panel when we click on this link
+            -->
+            <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+          </div>
+          <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+          <div class="center sliding">App Ventas Gabriel</div>
+        </div>
+      </div>
+      <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+      <div class="pages navbar-through toolbar-through">
+        <!-- Page, "data-page" contains page name -->
+        <div data-page="index" class="page">
+          <!-- Scrollable page content -->
+          <div class="page-content">
+            <form action="#" method="GET" id="search">
+              <div class="content-block-title"></div>
+              <div class="list-block">
+                <ul>
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-input">
+                          <input type="text" name="term" id="query"
+                            placeholder="Escribe el Producto a Buscar"
+                            autocorrect="off" autocapitalize="off">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+         <li class="item-divider">::: Conéctate Ecosistema de Marketing Móvil :::</li>
+                  <li>
+                    <label class="label-radio item-content">
+                      <input type="radio" name="filter" value="track">
+                      <div class="item-media">
+                        <i class="icon icon-form-radio"></i>
+                      </div>
+                      <div class="item-inner">
+                        <div class="item-title"> Nombre </div>
+                      </div>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="label-radio item-content">
+                      <input type="radio" name="filter" value="artist">
+                      <div class="item-media">
+                        <i class="icon icon-form-radio"></i>
+                      </div>
+                      <div class="item-inner">
+                        <div class="item-title">Precio</div>
+                      </div>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="label-radio item-content">
+                      <input type="radio" name="filter" value="album">
+                      <div class="item-media">
+                        <i class="icon icon-form-radio"></i>
+                      </div>
+                      <div class="item-inner">
+                        <div class="item-title">Existencia</div>
+                      </div>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="label-radio item-content">
+                      <!-- Checked by default -->
+                      <input type="radio" name="filter" value="all" checked>
+                      <div class="item-media">
+                        <i class="icon icon-form-radio"></i>
+                      </div>
+                      <div class="item-inner">
+                        <div class="item-title">Todas las anteriores</div>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <input type="hidden" name="limit" value="25" />
+              <div class="content-block">
+                <input type="submit" class="button button-big button-fill search-submit" value="Buscar Productos" />
+              </div>
+			
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/template7" id="results">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding">
+                <a href="#" class="back link">
+                  <i class="icon icon-back"></i>
+                  <span>Buscar</span>
+                </a>
+            </div>
+            <div class="center sliding">Resultados</div>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="page" data-page="results">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+        <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="back link"><i class="icon icon-back"></i></a>
+              </div>
+              <div class="center">Resultados</div>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="page-content">
+          <div class="content-block-title">{{tracks.count}} Regresar</div>
+          <div class="list-block media-list">
+            <ul>
+              {{#each tracks.items}}
+              <li>
+                <a href="#" class="item-link item-content"
+                  data-item="{{@index}}"
+                  data-context="{{stringify this}}"
+                  data-template="details"
+                >
+                  <div class="item-media">
+                    <img width="80" src="http://192.168.8.100:8082/VentasOnline/resources/images/{{this.code}}.jpg" />
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">{{this.name}}</div>
+                      <div class="item-after">{{this.unitPrice}}</div>
+                    </div>
+                    <div class="item-subtitle">{{this.description}}</div>
+                    <div class="item-text">{{this.brand}}</div>
+                  </div>
+                </a>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+    </div>
+  </script>
+
+  <script type="text/template7" id="details">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left sliding">
+          <a href="#" class="back link">
+            <i class="icon icon-back"></i>
+              <span>Results</span>
+          </a>
+        </div>
+        <div class="center sliding">Detalle del Producto</div>
+        <div class="right">
+          <a href="#" class="link star">
+            <i class="fa fa-star-o"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="page" data-page="details">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+        <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="back link"><i class="icon icon-back"></i></a>
+              </div>
+              <div class="center">Detalle del Producto</div>
+              <div class="right">
+                <a href="#" class="link star">
+                  <i class="fa fa-star-o"></i>
+                </a>
+              </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="page-content">
+          <div class="card">
+            <div class="card-header no-border no-padding">
+             <img width="80" src="http://192.168.8.100:8082/VentasOnline/resources/images/{{this.code}}.jpg" width="100%" />
+            </div>
+            <div class="card-content">
+              <div class="card-content-inner">
+                <div class="track-name">{{this.name}}</div>
+                <div class="artists-name">Lo mejor  {{this.description}}</div>
+                <div class="album-title">{{this.name}}</div>
+              </div>
+            </div>
+         
+           
+          </div>
+        </div>
+    </div>
+  </script>
+
+  <script type="text/template7" id="favorites">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="center sliding">Favorites</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="page" data-page="favorites">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+              </div>
+            <div class="center sliding">Favoritos</div>
+          </div>
+        </div>
+        {{/if}}
+
+        <div class="page-content">
+          {{#if tracks}}
+          <div class="content-block-title">Productos</div>
+          <div class="list-block media-list">
+            <ul>
+              {{#each tracks}}
+              <li>
+                <a href="#" class="item-link item-content"
+                  data-item="{{@index}}"
+                  data-context="{{stringify this}}"
+                  data-template="details"
+                >
+                  <div class="item-media">
+                    <img width="80" src="http://localhost:8082/VentasOnline/resources/images/{{this.code}}.jpg" width="100%" />
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">{{this.name}}</div>
+                      <div class="item-after">{{this.name}}</div>
+                    </div>
+                    <div class="item-subtitle">{{this.name}}</div>
+                    <div class="item-text">{{this.name}}</div>
+                  </div>
+                </a>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+          <div class="content-block">
+            <p>Si tienes un producto de Compra frecuente.</p>
+          </div>
+          {{/if}}
+        </div>
+    </div>
+  </script>
+    
+  
+   
+   <script type="text/template7" id="login">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="center sliding">login</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="page" data-page="login">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+              </div>
+            <div class="center sliding">Login</div>
+          </div>
+        </div>
+        {{/if}}
+
+        <div class="page-content">
+          {{#if tracks1}}
+          <div class="content-block-title">Productos</div>
+          <div class="list-block media-list">
+            <ul>
+              {{#each tracks1}}
+              <li>
+                <a href="#" class="item-link item-content"
+                  data-item="{{@index}}"
+                  data-context="{{stringify this}}"
+                  data-template="details"
+                >
+                  <div class="item-media">
+                    <img width="80" src="http://localhost:8082/VentasOnline/resources/images/{{this.code}}.jpg" width="100%" />
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">{{this.name}}</div>
+                      <div class="item-after">{{this.name}}</div>
+                    </div>
+                    <div class="item-subtitle">{{this.name}}</div>
+                    <div class="item-text">{{this.name}}</div>
+                  </div>
+                </a>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+      <div class="content-block-title">Inicio</div>
+           <form action="#" method="post" enctype="application/x-www-form-urlencoded" class="list-block inset" id="form-login" accept-charset="UTF-8">
+                      <ul>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                              <div class="item-title label">Usuario</div>
+                              <div class="item-input">
+                                <input type="text" name="vf_username" id="vf_username">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-password"></i></div>
+                            <div class="item-inner">
+                              <div class="item-title label">Contraseña</div>
+                              <div class="item-input">
+                                <input type="password" name="vf_password" id="vf_password">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-toggle"></i></div>
+                            <div class="item-inner">
+                              <div class="item-title label">Recordarme</div>
+                              <div class="item-input">
+                                <label class="label-switch">
+                                <input type="checkbox" name="vf_remember" id="vf_remember">
+                                <div class="checkbox"></div>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <div class="content-block"> <input type="submit" value="Entrar" class="button button-big button-fill" id="btn-submit" > </div>
+                    </form>
+          {{/if}}
+        </div>
+    </div>
+    
+    
+  </script>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="lib/MSOpenTech/winstore-jscompat.js"></script>
+  <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/init-styles.js"></script>
+  
+   
+  <script type="text/javascript">
+    
+    document.addEventListener("DOMContentLoaded", function(event) {
+	  $$('#views').show();
+      init();
+    });
+  </script>
+  <script type="text/javascript" src="js/guilleApp.js"></script>
+
+  
+</script>
+
+<script type="text/javascript">         
+   function showTable() {
+      document.getElementById('views').style.display = "block";
+	  localStorage.setItem('show', 'true'); 
+	   
+	    alert();
+	  
+	   
+   }                
+</script>
+</body>
+
+</html>
+
+
