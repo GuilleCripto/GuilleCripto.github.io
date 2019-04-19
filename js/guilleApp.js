@@ -189,8 +189,8 @@ function searchSubmit(e) {
   formData.media = 'music';
   
   $$('input').blur();
-   url1 = 'http://192.168.8.100:8082/VentasOnline/json/data/admin/all/products';
-   //url1 ='http://localhost/angular_php/php/index2.php';
+   //url1 = 'http://192.168.8.100:8082/VentasOnline/json/data/admin/all/products';
+   url1 ='http://localhost:85/angular_php/php/index2.php';
   myApp.showPreloader('Searching');
    $$.ajax({
    //movil   crossDomain: true,
